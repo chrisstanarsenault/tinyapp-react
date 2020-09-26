@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 export default function Header() {
   return (
@@ -21,12 +22,13 @@ export default function Header() {
 
         <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div className="navbar-nav">
-            <a className="nav-item nav-link" href="/urls">
+            <Link to="/urls" className="nav-item nav-link">
               My URLs
-            </a>
-            <a className="nav-item nav-link" href="/urls/new">
+            </Link>
+
+            <Link className="nav-item nav-link" to="/urls/new">
               Create New URL
-            </a>
+            </Link>
           </div>
         </div>
       </nav>
