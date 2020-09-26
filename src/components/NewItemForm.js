@@ -4,7 +4,11 @@ export default function NewItemForm() {
   return (
     <main style={{ margin: "1em" }}>
       <h3>Create TinyURL</h3>
-      <form className="form-inline" action="/urls" method="POST">
+      <form
+        className="form-inline"
+        action="http://localhost:8080/urls"
+        method="POST"
+      >
         <div className="form-group mb-2">
           <label htmlFor="longURL">Enter a URL:</label>
           <input
