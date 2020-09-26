@@ -22,6 +22,16 @@ app.get("/urls", (req, res) => {
   res.json(urlDatabase);
 });
 
+app.get("/urls/:shortURL", (req, res) => {
+  const shortURL = req.params.shortURL;
+  const longURL = urlDatabase.module.urlDatabase[req.params.shortURL];
+  const urlParams = {
+    shortURL,
+    longURL,
+  };
+  res.send(urlParams);
+});
+
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}!`);
 });

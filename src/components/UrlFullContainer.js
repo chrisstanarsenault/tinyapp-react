@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function UrlFullContainer() {
+export default function UrlFullContainer(props) {
   const [urls, setUrls] = useState({});
 
-  const getApi = async () => {
+  const getDatabase = async () => {
     const response = await axios.get("http://localhost:8080/urls");
     setUrls(response.data.module.urlDatabase);
   };
 
   useEffect(() => {
-    getApi();
+    getDatabase();
   }, []);
 
   const urlTableBody = Object.keys(urls).map((keyName, keyIndex) => {
