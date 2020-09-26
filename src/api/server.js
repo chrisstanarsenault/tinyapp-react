@@ -8,12 +8,12 @@ const urlDatabase = require("./urlDatabase");
 
 const generateRandomString = () => {
   let lettersNumbers =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
-  let randomID;
+    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let randomID = "";
 
   for (let i = 0; i < 6; i++) {
-    randomID += randomID.charAt(
-      Math.floor(Math.random()) * lettersNumbers.length
+    randomID += lettersNumbers.charAt(
+      Math.floor(Math.random() * lettersNumbers.length)
     );
   }
 
@@ -40,8 +40,9 @@ app.get("/urls", (req, res) => {
 });
 
 app.post("/urls", (req, res) => {
-  console.log(req.body);
-  res.send("ok");
+  let urlID = generateRandomString();
+  urlDatabase.module.urlDatabase[urlID] = req.body.longURL;
+  res.redirect(`http://localhost:3000/urls/${urlID}`);
 });
 
 app.get("/urls/:shortURL", (req, res) => {
@@ -52,6 +53,11 @@ app.get("/urls/:shortURL", (req, res) => {
     longURL,
   };
   res.send(urlParams);
+});
+
+app.get("/u/:shortURL", (req, res) => {
+  const longURL = urlDatabase.module.urlDatabase[req.params.shortURL];
+  res.redirect(longURL);
 });
 
 app.listen(PORT, () => {
