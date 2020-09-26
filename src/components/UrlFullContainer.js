@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-export default function UrlFullContainer(props) {
+import DeleteButton from "./DeleteButton";
+
+export default function UrlFullContainer() {
   const [urls, setUrls] = useState({});
 
   const getDatabase = async () => {
@@ -18,6 +20,9 @@ export default function UrlFullContainer(props) {
       <tr key={`url-${keyIndex}`}>
         <td>{keyName}</td>
         <td>{urls[keyName]}</td>
+        <td>
+          <DeleteButton keyName={keyName} />
+        </td>
       </tr>
     );
   });
@@ -30,6 +35,7 @@ export default function UrlFullContainer(props) {
           <tr>
             <th scope="col">Short URL</th>
             <th scope="col">Long URL</th>
+            <th scope="col">Delete</th>
           </tr>
         </thead>
         <tbody>{urlTableBody}</tbody>
