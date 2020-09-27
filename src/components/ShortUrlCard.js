@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 
+import EditForm from "./EditForm";
+
 export default function ShortUrlCard() {
   const [urlData, setUrlData] = useState({});
   let { shortURL } = useParams();
@@ -26,7 +28,15 @@ export default function ShortUrlCard() {
             Short URL: <a href={`/u/${urlData.shortURL}`}>{shortURL}</a>
           </p>
         </div>
-        <div className="card-footer text-muted"></div>
+        <div
+          className="card-footer text-muted"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+          }}
+        >
+          <EditForm shortURL={shortURL} />
+        </div>
       </div>
     );
   } else {

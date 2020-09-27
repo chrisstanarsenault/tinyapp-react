@@ -21,6 +21,13 @@ export default function UrlFullContainer() {
         <td>{keyName}</td>
         <td>{urls[keyName]}</td>
         <td>
+          <a href={`/urls/${keyName}`}>
+            <button type="button" className="btn btn-outline-primary">
+              Edit
+            </button>
+          </a>
+        </td>
+        <td>
           <DeleteButton keyName={keyName} />
         </td>
       </tr>
@@ -35,6 +42,7 @@ export default function UrlFullContainer() {
           <tr>
             <th scope="col">Short URL</th>
             <th scope="col">Long URL</th>
+            <th scope="col">Edit</th>
             <th scope="col">Delete</th>
           </tr>
         </thead>
