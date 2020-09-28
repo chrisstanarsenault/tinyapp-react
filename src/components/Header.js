@@ -1,7 +1,33 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
+import LoginForm from "./LoginForm";
+import LoggedInName from "./LoggedInName";
+
 export default function Header() {
+  const isLoggedIn = (cb) => {
+    const value = cb;
+    console.log(value);
+    if (value) {
+      return <LoggedInName username={value} />;
+    } else {
+      return <LoginForm />;
+    }
+  };
+
+  // returns the cookie with the given name,
+  // or undefined if not found
+  function getCookie(name) {
+    let matches = document.cookie.match(
+      new RegExp(
+        "(?:^|; )" +
+          name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, "\\$1") +
+          "=([^;]*)"
+      )
+    );
+    return matches ? decodeURIComponent(matches[1]) : undefined;
+  }
+
   return (
     <header>
       <nav className="navbar navbar-expand-md navbar-dark bg-success">
@@ -31,6 +57,7 @@ export default function Header() {
             </Link>
           </div>
         </div>
+        {isLoggedIn(getCookie("username"))}
       </nav>
     </header>
   );

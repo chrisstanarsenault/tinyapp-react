@@ -1,8 +1,22 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 const app = express();
 const PORT = 8080;
+
+app.use(bodyParser.urlencoded({ extended: true }));
+
+app.use(function (req, res, next) {
+  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept"
+  );
+  next();
+});
+
+app.use(cookieParser());
 
 const urlDatabase = require("./urlDatabase");
 
@@ -19,17 +33,6 @@ const generateRandomString = () => {
 
   return randomID;
 };
-
-app.use(bodyParser.urlencoded({ extended: true }));
-
-app.use(function (req, res, next) {
-  res.header("Access-Control-Allow-Origin", "http://localhost:3000"); // update to match the domain you will make the request from
-  res.header(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept"
-  );
-  next();
-});
 
 app.get("/", (req, res) => {
   res.send("Hello!");
@@ -70,6 +73,16 @@ app.post("/urls/:shortURL/delete", (req, res) => {
 app.get("/u/:shortURL", (req, res) => {
   const longURL = urlDatabase.module.urlDatabase[req.params.shortURL];
   res.redirect(longURL);
+});
+
+app.post("/login", (req, res) => {
+  res.cookie("username", req.body.username);
+  res.redirect("http://localhost:3000/urls");
+});
+
+app.post("/logout", (req, res) => {
+  res.clearCookie("username");
+  res.redirect("http://localhost:3000/urls");
 });
 
 app.listen(PORT, () => {
